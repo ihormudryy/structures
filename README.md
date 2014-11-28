@@ -1,1 +1,2 @@
-Custom Algorythms project by Ihor Mudryy (ihor.mudryy@gmail.com)
+-----------
+Created for better understanding algorythms, data structures and C++ 11
