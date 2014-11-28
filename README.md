@@ -1,4 +1,1 @@
-structures
-==========
-
-Custom data structures
+Custom Algorythms project by Ihor Mudryy (ihor.mudryy@gmail.com)
