@@ -14,7 +14,7 @@ if(COMPILER_SUPPORTS_GCC_WARNING_FLAGS)
 endif()
 
 add_subdirectory(src)
-add_subdirectory(libs/gmock-1.7.0)
+add_subdirectory(3rd_party/gmock-1.7.0)
 
 option(BUILD_TESTS "Create project files for building the unit tests" ON)
 if(BUILD_TESTS)
