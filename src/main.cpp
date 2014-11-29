@@ -7,7 +7,6 @@ using namespace std;
 
 int main()
 {
-    typedef unique_ptr<Node<int>> int_node_ptr;
     Node<int>* current_node = new Node<int>();
     current_node->setValue(101);
     cout << (current_node->getValue() == 101);

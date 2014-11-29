@@ -14,9 +14,12 @@ if(COMPILER_SUPPORTS_GCC_WARNING_FLAGS)
 endif()
 
 add_subdirectory(src)
-add_subdirectory(3rd_party/gmock-1.7.0)
+
+
+set(BUILD_SHARED_LIBS ON)
 
 option(BUILD_TESTS "Create project files for building the unit tests" ON)
 if(BUILD_TESTS)
-    #add_subdirectory(tests)
+	add_subdirectory(3rd_party/gmock-1.7.0)
+    add_subdirectory(tests)
 endif()

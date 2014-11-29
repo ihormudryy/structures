@@ -1,4 +1,4 @@
-project(structures)
+project(structures CXX)
 
 file(GLOB_RECURSE HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/../include/*.h")
 file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
@@ -12,7 +12,9 @@ include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/../include"
 )
 
-add_executable(structures ${SOURCES})
+#add_executable(structures ${SOURCES})
+
+add_library(structures ${SOURCES})
 
 target_link_libraries(
     structures

@@ -1,54 +1,70 @@
 #include <gtest/gtest.h>
-#include <iostream>
 #include "../include/node/node.h"
 #include <memory>
 
-using namespace std;
 using namespace customalgorythms;
 
-Node<int> node;
+Node<int>* current_node = new Node<int>();
 
-TEST(TestNode, create)
+TEST(TestNode, createEmpty)
 {
-	ASSERT_TRUE(node.getValue() == NULL);
+    ASSERT_TRUE(current_node->getValue() == NULL);
 }
 
 TEST(TestNode, setValue)
 {
-	node.setValue(1);
-	ASSERT_TRUE(node.getValue() == 1);
-	ASSERT_TRUE(node.getPreviousNode() == NULL);
-	ASSERT_TRUE(node.getNextNode() == NULL);
+    current_node->setValue(100);
+    ASSERT_TRUE(current_node->getValue() == 100);
 }
 
-TEST(TestNode, setNextAndPrev)
+TEST(TestNode, setNextNode)
 {
-	Node<int> new_node;
-	new_node.setValue(2);
-	new_node.setPreviousNode(&node);
-	node.setNextNode(&new_node);
-	ASSERT_TRUE(node.getNextNode()->getValue() == 2);
-	ASSERT_TRUE(new_node.getPreviousNode()->getValue() == 1);
+    Node<int>* new_node = new Node<int>();
+    new_node->setValue(500);
+    new_node->setPreviousNode(current_node);
+    current_node->setNextNode(new_node);
+    ASSERT_TRUE(current_node->getNextNode()->getValue() == 500);
+    ASSERT_TRUE(new_node->getPreviousNode()->getValue() == 100);
+}
+
+TEST(TestNode, setPrevNode)
+{
+    Node<int>* new_node = new Node<int>();
+    new_node->setValue(-192);
+    new_node->setNextNode(current_node);
+    current_node->setPreviousNode(new_node);
+    ASSERT_TRUE(current_node->getPreviousNode()->getValue() == -192);
+    ASSERT_TRUE(new_node->getNextNode()->getValue() == 100);
 }
 
 TEST(TestNode, makeList)
 {
-	typedef unique_ptr<Node<int>> node_ptr;
-	node_ptr current_node(new Node<int>);
-	current_node->setValue(101);
-	ASSERT_TRUE(current_node->getValue() == 101);
-	for (int i = 0; i < 10; i++)
-	{
-		node_ptr new_node(new Node<int>);
-		new_node->setValue(i);
-		new_node->setPreviousNode(current_node.get());
-		current_node->setNextNode(new_node.get());
-		current_node = move(new_node);
-	}
-	Node<int>* m_node = current_node->getPreviousNode();
-	while (m_node->getPreviousNode() != NULL)
-	{
-		m_node = current_node->getPreviousNode();
-		cout << m_node->getValue() << ", ";
-	}
+    for (int i = 0; i < 10; i++)
+    {
+        Node<int>* new_node = new Node<int>();
+        Node<int>* copy_node_ptr = new Node<int>();
+        copy_node_ptr = current_node;
+        new_node->setValue(i);
+        new_node->setPreviousNode(copy_node_ptr);
+        copy_node_ptr->setNextNode(new_node);
+        current_node = new_node;
+        ASSERT_TRUE(current_node->getValue() == i);
+    }
+}
+
+TEST(TestNode, makeNodesWithOtherTypes)
+{
+    Node<float> float_node_0;
+    ASSERT_TRUE(float_node_0.getValue() == NULL);
+    float val = -1.012;
+    Node<float> float_node_1(val);
+    ASSERT_TRUE(float_node_1.getValue() == val);
+    Node<float> float_node_2(float_node_1);
+    ASSERT_TRUE(float_node_2.getValue() == val);
+    double d_val = 213145875320.121233;
+    Node<double> double_node_3(d_val);
+    ASSERT_TRUE(double_node_3.getValue() == d_val);
+    char st[] = "AbasRHLAPs12";
+    Node<char> char_node_4(*st);
+    ASSERT_TRUE(char_node_4.getValue() == *st);
 }
