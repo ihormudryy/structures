@@ -18,7 +18,7 @@ namespace customalgorythms
 	public:
 		Node<T>();
         Node<T>(T);
-        Node<T>(Node<T> &);
+        Node<T>(const Node<T> &);
         ~Node<T>();
 		void setNextNode(Node<T>*);
 		void setPreviousNode(Node<T>*);
@@ -58,7 +58,7 @@ namespace customalgorythms
     }
 
     template <typename T>
-    Node<T>::Node(Node<T>& node)
+    Node<T>::Node(const Node<T>& node)
     {
         this->value = node.value;
         this->next = node.next;

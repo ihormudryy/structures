@@ -9,11 +9,13 @@
 namespace customalgorythms
 {
 
+/**
+ * Doubly liked list
+ * tamplate class LinkedList is derived class from Node
+ */
 template <typename T>
-class LinkedList
+class LinkedList : public Node<T>
 {
-
-typedef unique_ptr< Node<T> > node_ptr;
 
 public:
 	LinkedList();

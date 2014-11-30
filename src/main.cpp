@@ -87,6 +87,7 @@ int main()
         cout << list.get() << ", ";
     } while (list.prev());
 
+
     return 0;
 }
 
