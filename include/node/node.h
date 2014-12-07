@@ -26,6 +26,7 @@ namespace customalgorythms
 		Node<T>* getPreviousNode();
 		void setValue(const T);
 		T getValue();
+//		bool operator==(const T&, const T&);
 
 	private:
 		T value;
@@ -125,6 +126,11 @@ namespace customalgorythms
 		this->next = node;
 	}
 
+//	template <typename T>
+//	bool operator==(const T& current, const T& other)
+//	{
+//		return current.getValue() == other.getValue();
+//	}
 }
 
 #endif // NODE_H

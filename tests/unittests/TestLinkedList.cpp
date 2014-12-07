@@ -35,7 +35,7 @@ TEST(TestLinkedList, getNextPrev)
 
 TEST(TestLinkedList, testRemove)
 {
-    list.remove(3);
+    list.remove(3, false);
     ASSERT_TRUE(list.getSize() == 19);
     int j = 0;
     do

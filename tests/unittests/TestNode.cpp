@@ -8,6 +8,7 @@ Node<int>* current_node = new Node<int>();
 
 TEST(TestNode, createEmpty)
 {
+    cout << sizeof(bool) << " " << sizeof(char) << endl;
     ASSERT_TRUE(current_node->getValue() == NULL);
 }
 

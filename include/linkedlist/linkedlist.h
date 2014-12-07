@@ -14,7 +14,7 @@ namespace customalgorythms
  * tamplate class LinkedList is derived class from Node
  */
 template <typename T>
-class LinkedList : public Node<T>
+class LinkedList
 {
 
 public:

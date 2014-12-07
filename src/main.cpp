@@ -16,8 +16,8 @@ int main()
         Node<int>* copy_node_ptr = new Node<int>();
         copy_node_ptr = current_node;
         new_node->setValue(i);
-        new_node->setPreviousNode(copy_node_ptr);
-        copy_node_ptr->setNextNode(new_node);
+//        new_node->setPreviousNode(copy_node_ptr);
+ //       copy_node_ptr->setNextNode(new_node);
         current_node = new_node;
     }
     Node<int>* m_node = current_node->getPreviousNode();
@@ -42,8 +42,8 @@ int main()
 
     cout << endl << endl << "Size "<< list.getSize() << endl;
 
-    list.remove(7);
-    list.remove(3);
+    list.remove(7, false);
+    list.remove(3, false);
     cout << endl << endl << "Size "<< list.getSize() << endl;
     do
     {
