@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
-#include "../include/node/node.h"
 #include <memory>
+
+#ifndef TESTING_MODE_H
+#define TESTING_MODE_H
+#endif // TESTING_MODE_H
+
+#include "../include/node/node.h"
 
 using namespace customalgorythms;
 
@@ -62,7 +67,7 @@ TEST(TestNode, makeNodesWithOtherTypes)
     ASSERT_TRUE(float_node_1.getValue() == val);
     Node<float> float_node_2(float_node_1);
     ASSERT_TRUE(float_node_2.getValue() == val);
-    double d_val = 213145875320.121233;
+    double d_val = 213145875320121233e-6;
     Node<double> double_node_3(d_val);
     ASSERT_TRUE(double_node_3.getValue() == d_val);
     char st[] = "AbasRHLAPs12";

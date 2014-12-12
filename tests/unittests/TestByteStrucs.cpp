@@ -3,6 +3,12 @@
 #include <math.h> 
 #include <limits> 
 
+#ifndef TESTING_MODE_H
+#define TESTING_MODE_H
+#endif // TESTING_MODE_H
+
+#define HW(name) cout<<"Hello World " << name <<endl
+
 using namespace std;
 
 struct b_struct
@@ -10,8 +16,29 @@ struct b_struct
 	int power = 0;
 	int mantissa;
 };
+/*
+void testReloading(int q)
+{
+    cout << "Called by value " << q << endl;
+}
+*/
+void testReloading(int& q)
+{
+    cout << "Called by reference " << q << endl;
+}
 
-void flipInts(int* a, int* b)
+void testReloading(int* q)
+{
+    cout << "Called by pointer " << q << endl;
+}
+
+void setValueToReference(int a, int& b, const int& c = 0)
+{
+    a += 10;
+    b += 200;
+}
+
+void flipInts(int* a, int* b = 0)
 {
 	int tmp = *b;
 	*b = *a;
@@ -127,4 +154,34 @@ TEST(TestByteStruct, arrays)
     cout << "ToInt " << toInt("100412") << endl;
     char* string = parseString(4823923);
     cout << "parseString 4823923 == " << string << endl;
+}
+
+TEST(TestByteStruct, references)
+{
+    int a0 = 2;
+    int a1 = 2;
+    setValueToReference(a0, a1);
+    cout << "a0 was 2 " << a0 << " a1 was 2 " << a1 <<endl;
+    setValueToReference(a1, a0);
+    cout << "a1 was 202 " << a1 <<endl;
+}
+
+TEST(TestByteStruct, testReload)
+{
+    int g = 10;
+    testReloading(g);
+    testReloading(&g);
+    void (*efct)(int, int&, const int&);
+    efct = &setValueToReference;
+    cout << "Pointer to function " << efct << endl;
+    (*efct)(g,g, 10);
+	cout << "Pointer to function called " << g << endl;
+    HW("FML");
+}
+
+TEST(TestByteStruct, testCipher)
+{
+    //char a = (int)"a"^2;
+    //cout << "encrypted " << a << endl;
+    //cout << "decrypted " << (char)(2^(int)a) << endl;
 }

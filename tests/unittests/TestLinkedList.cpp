@@ -1,4 +1,9 @@
 #include <gtest/gtest.h>
+
+#ifndef TESTING_MODE_H
+#define TESTING_MODE_H
+#endif // TESTING_MODE_H
+
 #include "../include/linkedlist/linkedlist.h"
 
 customalgorythms::LinkedList<int> list;
@@ -6,15 +11,19 @@ customalgorythms::LinkedList<int> list;
 TEST(TestLinkedList, Create)
 {
 	ASSERT_TRUE(&list != NULL);
+	ASSERT_TRUE(!list.hasNext());
+	ASSERT_TRUE(!list.hasPrev());
 }
 
 TEST(TestLinkedList, Fill)
 {
     for (int i = 0; i < 20; i++)
     {
-        list.add(i % 5);
+        list.add(i % 5);	
         ASSERT_TRUE(list.get() == 0);
     }
+	ASSERT_TRUE(list.hasNext());
+	ASSERT_TRUE(!list.hasPrev());
 }
 
 TEST(TestLinkedList, getNextPrev)
@@ -35,7 +44,7 @@ TEST(TestLinkedList, getNextPrev)
 
 TEST(TestLinkedList, testRemove)
 {
-    list.remove(3, false);
+    list.remove(3);
     ASSERT_TRUE(list.getSize() == 19);
     int j = 0;
     do
@@ -81,4 +90,55 @@ TEST(TestLinkedList, addAfter)
     } while (list.prev());
 
     ASSERT_TRUE(list.getSize() == 17);
+}
+
+
+TEST(TestLinkedList, listOfPointers)
+{
+	customalgorythms::LinkedList<int*> listOfPtrs;
+	for (int h = 0; h < 20; h++)
+	{
+		int* v = new int(h);
+		listOfPtrs.add(v);
+	}
+	cout << "From PTR!!" << endl;
+	do
+	{
+		int* l = listOfPtrs.get();
+		cout << *l << " ";
+	} while (listOfPtrs.next());
+}
+
+TEST(TestLinkedList, testBack)
+{
+	while (list.next()){};
+	ASSERT_TRUE(list.get() == 4);
+	list.back();
+	ASSERT_TRUE(list.get() == 0);
+}
+
+TEST(TestLinkedList, testClear)
+{
+	customalgorythms::LinkedList<char> charList;
+
+	for (int i = 49; i < 79; i++)
+	{
+		charList.add((char)i);
+	}
+	charList.clear();
+	ASSERT_TRUE(charList.getSize() == 0);
+	ASSERT_TRUE(charList.get() == NULL);
+
+	for (int i = 49; i < 79; i++)
+	{
+		charList.add((char)i);
+	}
+
+	ASSERT_TRUE(charList.getSize() == 30);
+	for (int i = 49; i < 79; i++)
+	{
+		char c = charList.get();
+		charList.next();
+		ASSERT_TRUE((int)c == i);
+	}
 }

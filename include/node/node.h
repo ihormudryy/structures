@@ -9,7 +9,7 @@ namespace customalgorythms
 {
     /**
      * Class Node is used as a base class for all custom data structures
-     * Using tamplate possible to instantiate Node for any stadart type e.g Node<double>
+     * Using template possible to instantiate Node for any standard type e.g Node<double>
      */
 	template <typename T>
 	class Node
@@ -22,11 +22,10 @@ namespace customalgorythms
         ~Node<T>();
 		void setNextNode(Node<T>*);
 		void setPreviousNode(Node<T>*);
-		Node<T>* getNextNode();
-		Node<T>* getPreviousNode();
-		void setValue(const T);
+		Node<T>* getNextNode() const;
+		Node<T>* getPreviousNode() const;
+        void setValue(const T);
 		T getValue();
-//		bool operator==(const T&, const T&);
 
 	private:
 		T value;
@@ -53,17 +52,16 @@ namespace customalgorythms
     template <typename T>
     Node<T>::~Node()
     {
-        //delete this->prev;
-        //delete this->next;
-        //delete &this->value;
+		//if (prev) delete prev;
+		//if (next) delete next;
     }
 
     template <typename T>
     Node<T>::Node(const Node<T>& node)
     {
-        this->value = node.value;
-        this->next = node.next;
-        this->prev = node.prev;
+        value = node.value;
+        next = node.next;
+        prev = node.prev;
     }
 
     /**
@@ -71,9 +69,9 @@ namespace customalgorythms
      * @param typename value
      */
 	template <typename T>
-	void Node<T>::setValue(T val)
+    void Node<T>::setValue(T val)
 	{
-		this->value = val;
+        value = val;
 	}
 
     /**
@@ -83,7 +81,7 @@ namespace customalgorythms
 	template <typename T>
 	T Node<T>::getValue()
 	{
-		return this->value;
+		return value;
 	}
 
     /**
@@ -91,9 +89,9 @@ namespace customalgorythms
      * @returns pointer to previous node
      */
 	template <typename T>
-	Node<T>* Node<T>::getPreviousNode()
+	Node<T>* Node<T>::getPreviousNode() const
 	{
-		return this->prev;
+		return prev;
 	}
 
     /**
@@ -101,9 +99,9 @@ namespace customalgorythms
      * @returns pointer to next node
      */
 	template <typename T>
-	Node<T>* Node<T>::getNextNode()
+	Node<T>* Node<T>::getNextNode() const
 	{
-		return this->next;
+		return next;
 	}
 
     /**
@@ -113,7 +111,7 @@ namespace customalgorythms
 	template <typename T>
 	void Node<T>::setPreviousNode(Node<T>* node)
 	{
-		this->prev = node;
+		prev = node;
 	}
 
     /**
@@ -123,14 +121,8 @@ namespace customalgorythms
 	template <typename T>
 	void Node<T>::setNextNode(Node<T>* node)
 	{
-		this->next = node;
+		next = node;
 	}
-
-//	template <typename T>
-//	bool operator==(const T& current, const T& other)
-//	{
-//		return current.getValue() == other.getValue();
-//	}
 }
 
 #endif // NODE_H
