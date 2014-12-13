@@ -7,7 +7,7 @@
 
 #include "../include/node/node.h"
 
-using namespace customalgorythms;
+using namespace customalgorithms;
 
 Node<int>* current_node = new Node<int>();
 

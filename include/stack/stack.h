@@ -6,7 +6,7 @@
 
 #pragma once
 
-namespace customalgorythms
+namespace customalgorithms
 {
 
 /**

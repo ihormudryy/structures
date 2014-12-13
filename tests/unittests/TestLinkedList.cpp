@@ -6,7 +6,7 @@
 
 #include "../include/linkedlist/linkedlist.h"
 
-customalgorythms::LinkedList<int> list;
+customalgorithms::LinkedList<int> list;
 
 TEST(TestLinkedList, Create)
 {
@@ -95,7 +95,7 @@ TEST(TestLinkedList, addAfter)
 
 TEST(TestLinkedList, listOfPointers)
 {
-	customalgorythms::LinkedList<int*> listOfPtrs;
+	customalgorithms::LinkedList<int*> listOfPtrs;
 	for (int h = 0; h < 20; h++)
 	{
 		int* v = new int(h);
@@ -119,7 +119,7 @@ TEST(TestLinkedList, testBack)
 
 TEST(TestLinkedList, testClear)
 {
-	customalgorythms::LinkedList<char> charList;
+	customalgorithms::LinkedList<char> charList;
 
 	for (int i = 49; i < 79; i++)
 	{

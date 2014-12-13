@@ -2,7 +2,7 @@
 #include "../include/linkedlist/linkedlist.h"
 #include "../include/node/node.h"
 
-using namespace customalgorythms;
+using namespace customalgorithms;
 using namespace std;
 
 int main()

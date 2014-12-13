@@ -16,14 +16,14 @@ namespace ca_test
 		T getHead() const;
 
 	private:
-		customalgorythms::LinkedList<T>* list;
+		customalgorithms::LinkedList<T>* list;
 	};
 
 	template <typename T>
 	inline TestDerivedClass<T>::TestDerivedClass()
 	{
 		//cout << PI << endl;
-		this->list = new customalgorythms::LinkedList<T>();
+		this->list = new customalgorithms::LinkedList<T>();
 	}
 
 	template <typename T>

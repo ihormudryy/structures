@@ -7,7 +7,7 @@
 
 #include "../tests/unittests/TestWrapper.h"
 
-using namespace customalgorythms;
+using namespace customalgorithms;
 
 TEST(TestStack, createEmptyStack)
 {

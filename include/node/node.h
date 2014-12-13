@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace customalgorythms
+namespace customalgorithms
 {
     /**
      * Class Node is used as a base class for all custom data structures

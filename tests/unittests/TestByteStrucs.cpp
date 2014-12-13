@@ -179,9 +179,21 @@ TEST(TestByteStruct, testReload)
     HW("FML");
 }
 
-TEST(TestByteStruct, testCipher)
+TEST(TestByteStruct, testUnion)
 {
-    //char a = (int)"a"^2;
-    //cout << "encrypted " << a << endl;
-    //cout << "decrypted " << (char)(2^(int)a) << endl;
+    union simple
+    {
+        int a;
+        char* b;
+        double d;
+        //simple(){};
+        //simple(int _a, char* _b, double _d){a=_a; b=_b; d=_d};
+    };
+    simple s;
+    s.a = 1;
+    s.b = "2";
+    s.d = 3.2d;
+    ASSERT_TRUE(s.a == 1);
+    ASSERT_TRUE(s.b == "2");
+    ASSERT_TRUE(s.d == 3.2d);
 }
