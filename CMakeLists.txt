@@ -8,9 +8,17 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-std=gnu++0x)
 endif()
 
+option(CODE_COVERAGE "Enable code coverage option" OFF)
+
+if(CODE_COVERAGE)
+	set(COVERAGE "-fprofile-arcs -ftest-coverage")
+	set(GCC_COVERAGE_LINK_FLAGS "-lgcov")
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
+endif()
+
 if(COMPILER_SUPPORTS_GCC_WARNING_FLAGS)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-parameter -std=c++11")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -std=c++11")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-parameter -std=c++11 ${COVERAGE}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -std=c++11 ${COVERAGE}")
 endif()
 
 add_subdirectory(src)
