@@ -70,12 +70,12 @@ template <typename T>
 inline LinkedList<T>::~LinkedList()
 {
 
-	if (_currentNode != _headNode && _currentNode != _tailNode)
-		delete _currentNode;
-	if (_headNode != _tailNode)
+    //if (_currentNode && _currentNode != _headNode && _currentNode != _tailNode)
+        //delete _currentNode;
+    if (_headNode != _tailNode)
 	{
-		delete _tailNode;
-		delete _headNode;
+        //if(_tailNode) delete _tailNode;
+        //if(_headNode)delete _headNode;
 	}
 }
 
