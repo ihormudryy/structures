@@ -181,19 +181,31 @@ TEST(TestByteStruct, testReload)
 
 TEST(TestByteStruct, testUnion)
 {
-    union simple
+    struct simple
     {
         int a;
-        char* b;
-        double d;
-        //simple(){};
-        //simple(int _a, char* _b, double _d){a=_a; b=_b; d=_d};
+        int b;
     };
     simple s;
     s.a = 1;
-    s.b = "2";
-    s.d = 3.2d;
     ASSERT_TRUE(s.a == 1);
-    ASSERT_TRUE(s.b == "2");
-    ASSERT_TRUE(s.d == 3.2d);
+    s.b = 1234;
+    ASSERT_TRUE(s.b == 1234);
+}
+
+TEST(TestByteStruct, testDestructor)
+{
+	class one
+	{
+	public:
+		one(const int& i = 0){};
+		~one(){ 
+			cout << "Destructor called" << endl;
+		};
+	};
+	one* instance1 = new one(2);
+	delete instance1;
+	one instance2;
+	one instance3;
+	one* instance4 = &instance2;
 }

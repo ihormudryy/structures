@@ -52,8 +52,6 @@ namespace customalgorithms
     template <typename T>
     Node<T>::~Node()
     {
-		//if (prev) delete prev;
-		//if (next) delete next;
     }
 
     template <typename T>

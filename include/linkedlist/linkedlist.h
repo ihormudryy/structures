@@ -24,6 +24,8 @@ friend class TestDerivedClass;
 
 template <typename Type>
 friend class Stack;
+template <typename Type>
+friend class Queue;
 
 public:
 	LinkedList();
@@ -50,11 +52,11 @@ protected:
 
 private:
     int size = 0;
-	void init(T);
 	bool initialized = false;
     Node<T>* _headNode;
     Node<T>* _tailNode;
     Node<T>* _currentNode;
+	void _init(T);
 	T _pop(bool = false);
     void _add(T&, T&, bool = false);
 };
@@ -67,17 +69,26 @@ inline LinkedList<T>::LinkedList()
 template <typename T>
 inline LinkedList<T>::~LinkedList()
 {
-    //delete _tailNode;
-    //delete _headNode;
-    //delete _currentNode;
+
+	if (_currentNode != _headNode && _currentNode != _tailNode)
+		delete _currentNode;
+	if (_headNode != _tailNode)
+	{
+		delete _tailNode;
+		delete _headNode;
+	}
 }
 
 template <typename T>
 inline LinkedList<T>::LinkedList(T arg)
 {
-	this->init(arg);
+	this->_init(arg);
 }
 
+/**
+* Move to a next node in linked list.
+* @returns bool true if next element exists and false is there is no any
+*/
 template <typename T>
 bool LinkedList<T>::next()
 {
@@ -90,6 +101,10 @@ bool LinkedList<T>::next()
         return false;
 }
 
+/**
+* Move to a previous node in linked list.
+* @returns bool true if previous element exists and false is there is no any
+*/
 template <typename T>
 bool LinkedList<T>::prev()
 {
@@ -102,12 +117,20 @@ bool LinkedList<T>::prev()
         return false;
 }
 
+/**
+* Get value of current node in linked list.
+* @returns typename value or NULL if list is empty
+*/
 template <typename T>
 T LinkedList<T>::get()
 {
 	return (_currentNode) ? _currentNode->getValue() : NULL;
 }
 
+/**
+* Check if next node exists in linked list.
+* @returns bool true if next element exists
+*/
 template <typename T>
 bool LinkedList<T>::hasNext()
 {
@@ -117,6 +140,10 @@ bool LinkedList<T>::hasNext()
 		return false;
 }
 
+/**
+* Check if previous node exists in linked list.
+* @returns bool true if previous element exists
+*/
 template <typename T>
 bool LinkedList<T>::hasPrev()
 {
@@ -127,7 +154,7 @@ bool LinkedList<T>::hasPrev()
 }
 
 template <typename T>
-void LinkedList<T>::init(T node)
+void LinkedList<T>::_init(T node)
 {
     Node<T>* new_node = new Node<T>;
     new_node->setValue(node);
@@ -138,6 +165,10 @@ void LinkedList<T>::init(T node)
     initialized = true;
 }
 
+/**
+* Add new element at the end of the list.
+* @param typename value of new node
+*/
 template <typename T>
 void LinkedList<T>::add(T elem)
 {
@@ -154,7 +185,7 @@ void LinkedList<T>::add(T elem)
 	}
 	else
 	{
-		this->init(elem);
+		this->_init(elem);
 	}
 }
 
@@ -192,22 +223,39 @@ void LinkedList<T>::_add(T& value, T& elem, bool before)
 	}
 	else
 	{
-		this->init(elem);
+		this->_init(elem);
 	}
 }
 
+/**
+* Add new element before some node which has value 'elem' (only one hit). 
+* It searched for specified element and if finds then inserts new node just before it.
+* @param typename value of new node
+* @param typename elem value of special node
+*/
 template <typename T>
 void LinkedList<T>::addBefore(T value, T elem)
 {
 	this->_add(value, elem, true);
 }
 
+/**
+* Add new element after some node which has value 'elem' (only one hit).
+* It searched for specified element and if finds then inserts new node just after it.
+* @param typename value of new node
+* @param typename elem value of special node
+*/
 template <typename T>
 void LinkedList<T>::addAfter(T value, T elem)
 {
 	this->_add(value, elem, false);
 }
 
+/**
+* Remove specified element
+* @param typename elem - element to be found and removed
+* @param bool all - specify if all elements with such value have to be removed
+*/
 template <typename T>
 void LinkedList<T>::remove(T elem, bool all)
 {
@@ -227,6 +275,10 @@ void LinkedList<T>::remove(T elem, bool all)
     } while (node_ptr->getNextNode());
 }
 
+/**
+* Get number of elements in linked list
+* @returns int number of elements
+*/
 template <typename T>
 int LinkedList<T>::getSize()
 {
@@ -288,12 +340,18 @@ T LinkedList<T>::popTail()
 	return (size > 0) ? this->_pop(false) : NULL;
 }
 
+/**
+* Put the current node to the head of the list
+*/
 template <typename T>
 void LinkedList<T>::back()
 {
 	_currentNode = _headNode;
 }
 
+/**
+* Clear and reset linked list to its empty state
+*/
 template <typename T>
 void LinkedList<T>::clear()
 {

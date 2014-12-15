@@ -1,8 +1,7 @@
-#include <memory>
 #include "../include/linkedlist/linkedlist.h"
 
-#ifndef STACK_H
-#define STACK_H
+#ifndef QUEUE_H
+#define QUEUE_H
 
 #pragma once
 
@@ -10,60 +9,58 @@ namespace customalgorithms
 {
 
 /**
-* Stack class
-* template class Stack based on LinkedList
-*/
+ * template class Queue
+ */
 template <typename T>
-class Stack
+class Queue
 {
 public:
-	Stack();
-	Stack(T);
-	~Stack();
-	void push(const T);
-	T pop() const;
+	Queue();
+	Queue(T);
+	~Queue();
+	void enqueue(const T);
+	T dequeue() const;
 	int size();
 
 private:
 	LinkedList<T>* _list;
-}; 
+};
 
 template <typename T>
-Stack<T>::Stack()
+Queue<T>::Queue()
 {
 	_list = new LinkedList<T>();
 }
 
 template <typename T>
-Stack<T>::Stack(T arg)
+Queue<T>::Queue(T arg)
 {
 	_list = new LinkedList<T>(arg);
 }
 
 template <typename T>
-Stack<T>::~Stack()
+Queue<T>::~Queue()
 {
 	delete _list;
 }
 
 template <typename T>
-void Stack<T>::push(const T val)
+void Queue<T>::enqueue(const T val)
 {
 	_list->add(val);
 }
 
 template <typename T>
-T Stack<T>::pop() const
+T Queue<T>::dequeue() const
 {
-	return _list->popTail();
+	return _list->popHead();
 }
 
 template <typename T>
-int Stack<T>::size()
+int Queue<T>::size()
 {
 	return _list->getSize();
 }
 
 }
-
-#endif // STACK_H
+#endif // QUEUE_H

@@ -14,10 +14,10 @@ if(CODE_COVERAGE)
 	set(COVERAGE "-fprofile-arcs -ftest-coverage")
 	set(GCC_COVERAGE_LINK_FLAGS "-lgcov")
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -Wall -Wno-unused-parameter -std=c++11 ${COVERAGE}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -Wall -Wno-unused-parameter -std=c++11 ${COVERAGE}")
 endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -Wall -Wextra -Wno-unused-parameter -std=c++11 ${COVERAGE}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -Wall -Wextra -Wno-unused-parameter -std=c++11 ${COVERAGE}")
 
 add_subdirectory(src)
 
