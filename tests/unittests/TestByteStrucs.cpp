@@ -16,12 +16,7 @@ struct b_struct
 	int power = 0;
 	int mantissa;
 };
-/*
-void testReloading(int q)
-{
-    cout << "Called by value " << q << endl;
-}
-*/
+
 void testReloading(int& q)
 {
     cout << "Called by reference " << q << endl;
@@ -77,7 +72,6 @@ char* parseString(int number)
         res[--grade] = val;
         cout << number << endl;
     }
-    //res[grade] = "\0";
     return res;
 }
 
@@ -106,8 +100,6 @@ TEST(TestByteStruct, simpleStructrure)
     }
 	cout<<endl;
 	double* doub = new double(243454412e-5);
-	//cout.precision(20);
-	//cout << "double " << FLT_RADIX << endl;
 	b_struct instance = parseDouble(*doub);
 	cout << "power -" << instance.power << endl;
 	cout << "mantissa " << instance.mantissa << endl;
@@ -117,7 +109,6 @@ TEST(TestByteStruct, simpleStructrure)
 	int* b1 = new int(578323);
 	flipInts(a1, b1);
 	cout << "A " << *a1 << " B " << *b1 << endl;
-
 	int& a2 = *b1;
 	int& b2 = *a1;
 	flipInts(&a2, &b2);
@@ -141,16 +132,11 @@ TEST(TestByteStruct, arrays)
 	double dbarr[3] = { 1.45, 53.42, 1.3e-3 };
 	double* s = dbarr;
 	cout << "First " << *s << endl;
-//	while (s++)
-    //	cout << *s << endl;
-
 	cout << "INTEGERS" << endl;
 
 	int intarr[4] = { 1, 52, 3, 19 };
 	int* a = intarr;
 	cout << "First int " << *a << endl;
-//	while (a++)
-//		cout << *a << endl;
     cout << "ToInt " << toInt("100412") << endl;
     char* string = parseString(4823923);
     cout << "parseString 4823923 == " << string << endl;
@@ -195,17 +181,88 @@ TEST(TestByteStruct, testUnion)
 
 TEST(TestByteStruct, testDestructor)
 {
-	class one
+	class abstr
 	{
+		virtual void cool() = 0;
+		virtual int random() = 0;
+	};
+	class base
+	{
+		
 	public:
-		one(const int& i = 0){};
-		~one(){ 
+		enum check
+		{
+			IGOR, VASYA
+		};
+		base(const int& i = 0){ val = i; };
+		~base(){
 			cout << "Destructor called" << endl;
 		};
+		check current; 
+		virtual void print(){ cout << "print value " << this->val << " CURRENT " << current << endl; };
+		virtual void down(){ cout << "BASE COOL" << endl; };
+	protected:
+		void outter(){ cout << "PROTECTED METHOD " << endl; };
+	private:
+		int val;
 	};
-	one* instance1 = new one(2);
+
+	class derived : base, abstr
+	{
+	public:
+		void cool(){};
+		int random(){ return 9; };
+		derived(const base::check value, const int& i = 0) : base(i){ _base.current = value; };
+		void print(){ _base.print(); base::outter(); };
+	private:
+		base _base;
+	};
+	
+	base* instance1 = new base(2);
 	delete instance1;
-	one instance2;
-	one instance3;
-	one* instance4 = &instance2;
+	base instance2;
+	base instance3;
+	base* instance4 = &instance2;
+	
+	derived der(base::check::IGOR, 5154);
+	der.print();
+}
+
+TEST(TestByteStruct, testVirtualMethods)
+{
+	class virt1
+	{
+	public:
+		~virt1(){ cout << "Virt1 destructor" << endl; };
+		virtual void draw(){ cout << "Vir1 draw() " << endl; };
+	};
+	class virt2
+	{
+	public:
+		virtual void draw(){ cout << "Vir2 draw() " << endl; };
+		//virtual void temp() = 0;
+	};
+	class virtDerived : public virt1, virt2
+	{
+	public:
+		//virtDerived(){};
+		//~virtDerived(){};
+		void operator delete(void*, size_t)
+		{
+			cout << "Virtual destructor " << endl;
+		};
+		void draw()
+		{
+			virt1::draw();
+			virt2::draw();
+		}
+	};
+	virtDerived d;
+	d.draw();
+	virt1* d_ptr = new virtDerived();
+	cout << "Base class " << endl;
+	d_ptr->draw();
+	delete d_ptr;
+	//virt1* v = d;
+	//v->draw();
 }

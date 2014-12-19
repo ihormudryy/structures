@@ -17,15 +17,16 @@ namespace customalgorithms
 
 	public:
 		Node<T>();
-        Node<T>(T);
-        Node<T>(const Node<T> &);
-        ~Node<T>();
+		Node<T>(T);
+		Node<T>(const Node<T> &);
+		~Node<T>();
 		void setNextNode(Node<T>*);
 		void setPreviousNode(Node<T>*);
 		Node<T>* getNextNode() const;
 		Node<T>* getPreviousNode() const;
-        void setValue(const T);
+		void setValue(const T);
 		T getValue();
+		bool operator==(const Node<T>&);
 
 	private:
 		T value;
@@ -48,6 +49,12 @@ namespace customalgorithms
         next(NULL)
     {
     }
+
+	template <typename T>
+	inline bool Node<T>::operator==(const Node<T>& other)
+	{
+		return other.value == this->value;
+	}
 
     template <typename T>
     Node<T>::~Node()

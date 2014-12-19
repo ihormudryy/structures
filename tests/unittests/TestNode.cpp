@@ -74,3 +74,12 @@ TEST(TestNode, makeNodesWithOtherTypes)
     Node<char> char_node_4(*st);
     ASSERT_TRUE(char_node_4.getValue() == *st);
 }
+
+TEST(TestNode, testEqualsOperator)
+{
+	Node<int> n1(34);
+	Node<int> n2(34);
+	Node<int> n3(100);
+	ASSERT_TRUE(n1 == n2);
+	ASSERT_FALSE(n1 == n3);
+}

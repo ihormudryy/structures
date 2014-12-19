@@ -51,8 +51,8 @@ protected:
 	T popTail();
 
 private:
-    int size = 0;
-	bool initialized = false;
+    int _size = 0;
+	bool _initialized = false;
     Node<T>* _headNode;
     Node<T>* _tailNode;
     Node<T>* _currentNode;
@@ -134,7 +134,7 @@ T LinkedList<T>::get()
 template <typename T>
 bool LinkedList<T>::hasNext()
 {
-	if (initialized)
+	if (_initialized)
 		return _currentNode->getNextNode() != NULL;
 	else
 		return false;
@@ -147,7 +147,7 @@ bool LinkedList<T>::hasNext()
 template <typename T>
 bool LinkedList<T>::hasPrev()
 {
-	if (initialized)
+	if (_initialized)
 		return _currentNode->getPreviousNode() != NULL;
 	else
 		return false;
@@ -161,8 +161,8 @@ void LinkedList<T>::_init(T node)
     _tailNode = new_node;
     _headNode = new_node;
     _currentNode = new_node;
-    size++;
-    initialized = true;
+    _size++;
+    _initialized = true;
 }
 
 /**
@@ -172,7 +172,7 @@ void LinkedList<T>::_init(T node)
 template <typename T>
 void LinkedList<T>::add(T elem)
 {
-	if (initialized)
+	if (_initialized)
 	{
         Node<T>* new_node = new Node<T>();
         Node<T>* copy_node_ptr = new Node<T>();
@@ -181,7 +181,7 @@ void LinkedList<T>::add(T elem)
         new_node->setPreviousNode(copy_node_ptr);
         copy_node_ptr->setNextNode(new_node);
         _tailNode = new_node;
-        size++;
+        _size++;
 	}
 	else
 	{
@@ -192,7 +192,7 @@ void LinkedList<T>::add(T elem)
 template <typename T>
 void LinkedList<T>::_add(T& value, T& elem, bool before)
 {
-	if (initialized)
+	if (_initialized)
 	{
 		Node<T>* node_ptr = _headNode;
 		do
@@ -215,7 +215,7 @@ void LinkedList<T>::_add(T& value, T& elem, bool before)
 					_tmp_node->setPreviousNode(new_node);
 					node_ptr->setNextNode(new_node);
 				}
-				size++;
+				_size++;
 				break;
 			}
 			node_ptr = node_ptr->getNextNode();
@@ -267,7 +267,7 @@ void LinkedList<T>::remove(T elem, bool all)
             Node<T>* next_node = node_ptr->getNextNode();
             prev_node->setNextNode(next_node);
             next_node->setPreviousNode(prev_node);
-            size--;
+            _size--;
             if (all == false)
                 break;
         }
@@ -282,7 +282,7 @@ void LinkedList<T>::remove(T elem, bool all)
 template <typename T>
 int LinkedList<T>::getSize()
 {
-    return size;
+    return _size;
 }
 
 template <typename T>
@@ -321,9 +321,9 @@ T LinkedList<T>::_pop(bool head)
 		_headNode = NULL;
 		_tailNode = NULL;
 		_currentNode = NULL;
-		initialized = false;
+		_initialized = false;
 	}
-	size--;
+	_size--;
 	return res;
 }
 
@@ -331,13 +331,13 @@ T LinkedList<T>::_pop(bool head)
 template <typename T>
 T LinkedList<T>::popHead()
 {
-	return (size > 0) ? this->_pop(true) : NULL;
+	return (_size > 0) ? this->_pop(true) : NULL;
 }
 
 template <typename T>
 T LinkedList<T>::popTail()
 {
-	return (size > 0) ? this->_pop(false) : NULL;
+	return (_size > 0) ? this->_pop(false) : NULL;
 }
 
 /**
@@ -355,7 +355,11 @@ void LinkedList<T>::back()
 template <typename T>
 void LinkedList<T>::clear()
 {
-	while (popHead()) {};
+	if (_headNode != NULL) 
+	{
+		popTail();
+		clear();
+	};
 }
 
 }
