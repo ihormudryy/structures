@@ -107,6 +107,7 @@ TEST(TestLinkedList, listOfPointers)
 		int* l = listOfPtrs.get();
 		cout << *l << " ";
 	} while (listOfPtrs.next());
+    cout << endl;
 }
 
 TEST(TestLinkedList, testBack)
@@ -141,4 +142,16 @@ TEST(TestLinkedList, testClear)
 		charList.next();
 		ASSERT_TRUE((int)c == i);
 	}
+}
+
+TEST(TestLinkedList, testOperators)
+{
+    list.back();
+    for (int i = 0; i < list.getSize() - 1; i++)
+    {
+        ASSERT_EQ(list.get(), list[i]);
+        cout << list[i] << "==" << list.get() << endl;
+        list.next();
+    }
+    cout << endl;
 }

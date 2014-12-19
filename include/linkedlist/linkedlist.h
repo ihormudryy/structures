@@ -43,6 +43,7 @@ public:
 	void back();
 	void clear();
     int getSize();
+    T operator [](T);
 
 protected:
 	T getHead();
@@ -283,6 +284,18 @@ template <typename T>
 int LinkedList<T>::getSize()
 {
     return _size;
+}
+
+template <typename T>
+inline T LinkedList<T>::operator [](T value)
+{
+    int _t = 0;
+    for (Node<T>* iter = _headNode; iter->getNextNode(); iter = iter->getNextNode())
+    {
+        if(value == _t++)
+            return iter->getValue();
+    }
+    return NULL;
 }
 
 template <typename T>
