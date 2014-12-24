@@ -43,7 +43,7 @@ public:
 	void back();
 	void clear();
     int getSize();
-    T operator [](T);
+    T operator [](unsigned int);
 
 protected:
 	T getHead();
@@ -70,14 +70,7 @@ inline LinkedList<T>::LinkedList()
 template <typename T>
 inline LinkedList<T>::~LinkedList()
 {
-
-    //if (_currentNode && _currentNode != _headNode && _currentNode != _tailNode)
-        //delete _currentNode;
-    if (_headNode != _tailNode)
-	{
-        //if(_tailNode) delete _tailNode;
-        //if(_headNode)delete _headNode;
-	}
+    while (_size > 0) this->popHead();
 }
 
 template <typename T>
@@ -287,7 +280,7 @@ int LinkedList<T>::getSize()
 }
 
 template <typename T>
-inline T LinkedList<T>::operator [](T value)
+inline T LinkedList<T>::operator [](unsigned int value)
 {
     int _t = 0;
     for (Node<T>* iter = _headNode; iter->getNextNode(); iter = iter->getNextNode())

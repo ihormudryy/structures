@@ -9,6 +9,51 @@
 
 #define HW(name) cout<<"Hello World " << name <<endl
 
+class String
+{
+public:
+    String(){};
+    String(String& arg)
+    {
+        _getLength(arg.value);
+        value = arg.value;
+    };
+    String(char* c)
+    {
+        _getLength(c);
+        value = c;
+    };
+    String operator=(char* c)
+    {
+        _getLength(c);
+        value = c;
+		return *this;
+    };
+    int length(){
+        return _length;
+    };
+    void print(){std::cout << value << std::endl;};
+    friend std::ostream& operator<<(std::ostream& o, const String& s){
+        return o << s.value;
+    };
+    char operator[](int i){
+        char res;
+        res = *(value+i);
+        return res;
+    };
+private:
+    char* value;
+    int _length = 0;
+    void _getLength(char* c)
+    {
+        char tmp;
+        while (tmp = *c++)
+        {
+            _length++;
+        }
+    };
+};
+
 using namespace std;
 
 struct b_struct
@@ -78,7 +123,6 @@ char* parseString(int number)
 b_struct parseDouble(double v)
 {
 	b_struct res;
-	double fractpart, intpart;
 	double tmp_val = v;
     while (tmp_val - floor(tmp_val) >= 1.0e-6)
 	{
@@ -265,4 +309,56 @@ TEST(TestByteStruct, testVirtualMethods)
 	delete d_ptr;
 	//virt1* v = d;
 	//v->draw();
+}
+
+TEST(TestByteStruct, testOverloadOperators)
+{
+    class simple
+    {
+        int v;
+        int f;
+    public:
+        simple(){};
+        simple(int arg){v = arg;};
+        int get(){return v;};
+        simple& operator=(int a){v = a; return *this;};
+        void operator+=(int s){this->v += s;};
+        operator char(){return (char)v;};
+    };
+    simple k(10);
+    k += 39;
+    ASSERT_EQ(k.get(), 49);
+    char c = k;
+    cout << c << endl;
+    simple z(344);
+    z = 1034;
+    z = 483;
+    cout << z.get() << endl;
+    ASSERT_EQ(z.get(), 483);
+}
+
+TEST(TestByteStruct, testCustomStringClass)
+{
+
+    String s1("igorko");
+    String s2 = s1;
+    s1.print();
+    s2 = "mudryypaokrje";
+    s1.print();
+    s2.print();
+    String s3(s2);
+    s3 = "superwise";
+    s3.print();
+    cout << s1 << " Size " <<  s1.length() << endl;
+    cout << s2 << " Size " <<  s2.length() << endl;
+    cout << "second " << s2[1] << endl;
+
+	class SubString : private String
+	{
+	public:
+		void get(){};
+	};
+
+	SubString sa;
+	//cout << sa.length() << endl;
 }
