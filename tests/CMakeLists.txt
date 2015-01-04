@@ -35,3 +35,13 @@ target_link_libraries(
 	gmock
 	structures
 )
+
+message(${PROJECT_BINARY_DIR})
+
+add_custom_command(TARGET CopyData 
+				  # ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/tests/data ${PROJECT_BINARY_DIR}
+ 				  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/tests/data/uf/tinyUF.txt ${PROJECT_BINARY_DIR}
+)
+execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/tests/data
+														   ${PROJECT_BINARY_DIR}/data
+)

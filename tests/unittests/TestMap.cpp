@@ -21,10 +21,10 @@ public:
 		switch (error)
 		{
 		case(exceptions::NULL_PTR):
-			cout << "Null pointer" << endl;
+            cerr << "Null pointer" << endl;
 			break;
 		case(exceptions::OUT_OF_RANGE) :
-			cout << "Index is out of range" << endl;
+            cerr << "Index is out of range" << endl;
 			break;
 		default:
 			break;
@@ -43,12 +43,6 @@ TEST(TestMap, testCreate)
 	Map<double, int> map1();
 	Map<double, int> map2;
 	Map<double, int> map3(map2);
-	struct asdf {
-		char fio[30];
-		unsigned char date : 4;
-		unsigned char code : 4;
-	};
-	std::cout << "Size of struct " << sizeof(asdf) << std::endl;
 	Map<int, int>* a1 = NULL;
 	try
 	{
@@ -56,11 +50,7 @@ TEST(TestMap, testCreate)
 	}
 	catch (Error e)
 	{
-		e.debug_print();
-        //terminate();
-	}
-    //ASSERT(a1);
-	void* sd = malloc(1);
+        e.debug_print();
+    }
 	ASSERT_THROW(ASSERT(a1), Error);
-
 }

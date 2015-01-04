@@ -320,22 +320,28 @@ TEST(TestByteStruct, testOverloadOperators)
     public:
         simple(){};
         simple(int arg){v = arg;};
-        int get(){return v;};
+        int get(const char* ...){return v;};
         simple& operator=(int a){v = a; return *this;};
         void operator+=(int s){this->v += s;};
         operator char(){return (char)v;};
     };
     simple k(10);
     k += 39;
-    ASSERT_EQ(k.get(), 49);
+	const char* sd = "asd";
+	ASSERT_EQ(k.get(sd, sd), 49);
     char c = k;
     cout << c << endl;
     simple z(344);
     z = 1034;
     z = 483;
-    cout << z.get() << endl;
-    ASSERT_EQ(z.get(), 483);
+	cout << z.get(sd, sd) << endl;
+	ASSERT_EQ(z.get(sd, sd), 483);
 }
+short x = 4, i = 0;
+void fun1()
+{  if (i == 0) throw 2; }
+int fun2()
+{ --x; fun1();  x++; return x; }
 
 TEST(TestByteStruct, testCustomStringClass)
 {
@@ -352,13 +358,21 @@ TEST(TestByteStruct, testCustomStringClass)
     cout << s1 << " Size " <<  s1.length() << endl;
     cout << s2 << " Size " <<  s2.length() << endl;
     cout << "second " << s2[1] << endl;
-
-	class SubString : private String
-	{
-	public:
-		void get(){};
-	};
-
-	SubString sa;
 	//cout << sa.length() << endl;
+    char* pass;
+    cout << "Password:" << endl;
+    cout.flush();
+    //cin >> *pass;
+
+
+    try
+    {
+        fun2();
+    }
+    catch (int)
+    {
+        cout << "Exception ";
+    }
+    cout << x << " " << i;
+
 }
