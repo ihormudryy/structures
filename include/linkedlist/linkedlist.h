@@ -1,5 +1,7 @@
 #include "node/node.h"
+#include "sort/sort.h"
 #include <memory>
+#include <iostream>
 
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
@@ -11,10 +13,10 @@ namespace customalgorithms
 
 /**
  * Doubly liked list
- * template class LinkedList is derived class from Node
+ * template class LinkedList is includes Node class
  */
 template <typename T>
-class LinkedList
+class LinkedList : public Sort
 {
 
 #ifdef TESTING_MODE_H
@@ -43,9 +45,14 @@ public:
 	void back();
 	void clear();
     int getSize();
+    int size();
     T operator [](unsigned int);
-
+    void print();
+	void sort(sorting_alg = CYCLE_SORT);
+	
 protected:
+	void exchangeNodes(Node<T>&, Node<T>&);
+	void exchangeValues(Node<T>&, Node<T>&);
 	T getHead();
 	T getTail();
 	T popHead();
@@ -60,6 +67,8 @@ private:
 	void _init(T);
 	T _pop(bool = false);
     void _add(T&, T&, bool = false);
+	void m_cycle_sort();
+	void m_insertion_sort();	
 };
 
 template <typename T>
@@ -68,15 +77,15 @@ inline LinkedList<T>::LinkedList()
 }
 
 template <typename T>
-inline LinkedList<T>::~LinkedList()
-{
-    while (_size > 0) this->popHead();
-}
-
-template <typename T>
 inline LinkedList<T>::LinkedList(T arg)
 {
 	this->_init(arg);
+}
+
+template <typename T>
+inline LinkedList<T>::~LinkedList()
+{
+    while (_size > 0) this->popHead();
 }
 
 /**
@@ -280,15 +289,28 @@ int LinkedList<T>::getSize()
 }
 
 template <typename T>
+int LinkedList<T>::size()
+{
+    return getSize();
+}
+
+template <typename T>
 inline T LinkedList<T>::operator [](unsigned int value)
 {
     int _t = 0;
-    for (Node<T>* iter = _headNode; iter->getNextNode(); iter = iter->getNextNode())
+    for (Node<T>* iter = _headNode; iter; iter = iter->getNextNode())
     {
         if(value == _t++)
             return iter->getValue();
     }
     return NULL;
+}
+
+template <typename T>
+void LinkedList<T>::print()
+{
+    for (Node<T>* iter = _headNode; iter; iter = iter->getNextNode())
+        std::cout << iter->getValue() << endl;
 }
 
 template <typename T>
@@ -337,7 +359,7 @@ T LinkedList<T>::_pop(bool head)
 template <typename T>
 T LinkedList<T>::popHead()
 {
-	return (_size > 0) ? this->_pop(true) : NULL;
+    return (_size > 0) ? this->_pop(true) : NULL;
 }
 
 template <typename T>
@@ -366,6 +388,86 @@ void LinkedList<T>::clear()
 		popTail();
 		clear();
 	};
+}
+
+template <typename T>
+void LinkedList<T>::exchangeNodes(Node<T>& from, Node<T>& to)
+{
+	Node<T> tmp_node(from);
+	from.setNextNode(to.getNextNode());
+	from.setPreviousNode(to.getPreviousNode());
+	to.setNextNode(tmp_node.getNextNode());
+	to.setPreviousNode(tmp_node.getPreviousNode());
+
+	if (from.getNextNode())
+		from.getNextNode()->setPreviousNode(&from);
+	else
+		_tailNode = &from;
+	if (from.getPreviousNode())
+		from.getPreviousNode()->setNextNode(&from);
+	else
+		_headNode = &from;
+
+	if (to.getNextNode())
+		to.getNextNode()->setPreviousNode(&to);
+	else
+		_tailNode = &to;
+	if (to.getPreviousNode())
+		to.getPreviousNode()->setNextNode(&to);
+	else
+		_headNode = &to;
+}
+
+template <typename T>
+void LinkedList<T>::exchangeValues(Node<T>& from, Node<T>& to)
+{
+	T tmp_val = from.getValue();
+	from.setValue(to.getValue());
+	to.setValue(tmp_val);
+}
+
+/**
+* Sort all elements in linked list
+* @param Optional sorting_alg enum. Default is CYCLE_SORT
+*/
+template <typename T>
+void LinkedList<T>::sort(sorting_alg arg)
+{
+	switch (arg)
+	{
+	case CYCLE_SORT:
+		this->m_cycle_sort();
+		break;
+	case INSERTION_SORT:
+		this->m_insertion_sort();
+		break;
+	}
+}
+
+template <typename T>
+void LinkedList<T>::m_cycle_sort()
+{
+	for (Node<T>* i = _headNode; i; i = i->getNextNode())
+	{
+		Node<T>* min = i;
+		for (Node<T>* j = i; j; j = j->getNextNode())
+		{
+			if (j->getValue() < min->getValue()) min = j;
+		}
+		exchangeValues(*min, *i);
+	}
+}
+
+template <typename T>
+void LinkedList<T>::m_insertion_sort()
+{
+	for (Node<T>* i = _headNode->getNextNode(); i; i = i->getNextNode())
+	{
+		for ( Node<T>* j = i;
+			 j->getPreviousNode() && j->getPreviousNode()->getValue() > j->getValue();
+			 j = j->getPreviousNode() )
+			exchangeValues(*j, *(j->getPreviousNode()));
+	}
 }
 
 }

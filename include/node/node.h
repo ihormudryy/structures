@@ -26,7 +26,11 @@ namespace customalgorithms
 		Node<T>* getPreviousNode() const;
 		void setValue(const T);
 		T getValue();
-		bool operator==(const Node<T>&);
+        bool operator==(const Node<T>&);
+        bool operator>=(const Node<T>&);
+        bool operator<=(const Node<T>&);
+        bool operator>(const Node<T>&);
+        bool operator<(const Node<T>&);
 
 	private:
 		T value;
@@ -37,16 +41,16 @@ namespace customalgorithms
 	template <typename T>
     Node<T>::Node()
 		: value(NULL),
-		prev(NULL),
-		next(NULL)
+		prev(nullptr),
+		next(nullptr)
 	{
 	}
 
     template <typename T>
     Node<T>::Node(T val)
         : value(val),
-        prev(NULL),
-        next(NULL)
+		prev(nullptr),
+		next(nullptr)
     {
     }
 
@@ -55,6 +59,30 @@ namespace customalgorithms
 	{
 		return other.value == this->value;
 	}
+
+    template <typename T>
+    inline bool Node<T>::operator>=(const Node<T>& other)
+    {
+        return this->value >= other.value;
+    }
+
+    template <typename T>
+    inline bool Node<T>::operator<=(const Node<T>& other)
+    {
+        return this->value <= other.value;
+    }
+
+    template <typename T>
+    inline bool Node<T>::operator>(const Node<T>& other)
+    {
+        return this->value > other.value;
+    }
+
+    template <typename T>
+    inline bool Node<T>::operator<(const Node<T>& other)
+    {
+        return this->value < other.value;
+    }
 
     template <typename T>
     Node<T>::~Node()

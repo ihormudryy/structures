@@ -31,17 +31,23 @@ include_directories(
 add_executable(unittests ${SOURCES})
 
 target_link_libraries(
-    unittests
+  unittests
 	gmock
 	structures
 )
 
-message(${PROJECT_BINARY_DIR})
-
-add_custom_command(TARGET CopyData 
-				  # ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/tests/data ${PROJECT_BINARY_DIR}
- 				  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/tests/data/uf/tinyUF.txt ${PROJECT_BINARY_DIR}
-)
-execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/tests/data
+if(WIN32)
+   
+    if (CMAKE_BUILD_TYPE  STREQUAL "Release")
+        set (BUILD "Release")
+    else()
+        set (BUILD "Debug")
+    endif()
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/tests/data 
+                               ${PROJECT_BINARY_DIR}/${BUILD}/data
+                    )
+else()
+    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/tests/data
 														   ${PROJECT_BINARY_DIR}/data
-)
+    )
+endif()

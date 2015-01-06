@@ -255,7 +255,7 @@ TEST(TestByteStruct, testDestructor)
 	{
 	public:
 		void cool(){};
-		int random(){ return 9; };
+        int random(){ return 9; }; // very unexpected :)
 		derived(const base::check value, const int& i = 0) : base(i){ _base.current = value; };
 		void print(){ _base.print(); base::outter(); };
 	private:
@@ -362,9 +362,6 @@ TEST(TestByteStruct, testCustomStringClass)
     char* pass;
     cout << "Password:" << endl;
     cout.flush();
-    //cin >> *pass;
-
-
     try
     {
         fun2();
@@ -374,5 +371,4 @@ TEST(TestByteStruct, testCustomStringClass)
         cout << "Exception ";
     }
     cout << x << " " << i;
-
 }

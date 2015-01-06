@@ -82,4 +82,10 @@ TEST(TestNode, testEqualsOperator)
 	Node<int> n3(100);
 	ASSERT_TRUE(n1 == n2);
 	ASSERT_FALSE(n1 == n3);
+    ASSERT_TRUE(n1 >= n2);
+    ASSERT_TRUE(n1 <= n2);
+    ASSERT_TRUE(n3 > n1);
+    ASSERT_TRUE(n1 < n3);
+    ASSERT_FALSE(n1 > n3);
+    ASSERT_FALSE(n3 < n1);
 }

@@ -11,7 +11,7 @@ namespace customalgorithms
 
 /**
 * Stack class
-* template class Stack based on LinkedList
+* template class Stack which composes LinkedList
 */
 template <typename T>
 class Stack
