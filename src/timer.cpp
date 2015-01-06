@@ -2,6 +2,10 @@
 
 using namespace customalgorithms;
 
+Timer::Timer(){}
+
+Timer::~Timer(){}
+
 string Timer::getTime()
 {
 	int delta = _timestamp_end.count() - _timestamp_start.count();

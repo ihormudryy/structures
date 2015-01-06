@@ -11,10 +11,10 @@ int main()
     current_node->setValue(101);
     cout << (current_node->getValue() == 101);
     for (int i = 0; i < 10; i++)
-    {
-        Node<int>* new_node = new Node<int>();
+    {  
         Node<int>* copy_node_ptr = new Node<int>();
         copy_node_ptr = current_node;
+        Node<int>* new_node = new Node<int>();
         new_node->setValue(i);
 //        new_node->setPreviousNode(copy_node_ptr);
  //       copy_node_ptr->setNextNode(new_node);

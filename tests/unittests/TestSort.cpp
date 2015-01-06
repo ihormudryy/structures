@@ -13,15 +13,16 @@ Timer timer;
 
 TEST(TestSortingAlgorithm, testCycleSort)
 {
+
     LinkedList<int> list;
     for (int i = 0; i < 100; i++)
         list.add(rand() % 100);
     
 	std::cout << endl;
-	timer.start();
+    timer.start();
 	list.sort(LinkedList<int>::CYCLE_SORT);
-	timer.stop();
-	cout << timer.getTime();
+    timer.stop();
+    cout << timer.getTime();
 
 	int prev = list.get();
 	int next = list.get();

@@ -176,10 +176,10 @@ template <typename T>
 void LinkedList<T>::add(T elem)
 {
 	if (_initialized)
-	{
-        Node<T>* new_node = new Node<T>();
+	{   
         Node<T>* copy_node_ptr = new Node<T>();
         copy_node_ptr = _tailNode;
+        Node<T>* new_node = new Node<T>();
         new_node->setValue(elem);
         new_node->setPreviousNode(copy_node_ptr);
         copy_node_ptr->setNextNode(new_node);
@@ -202,9 +202,9 @@ void LinkedList<T>::_add(T& value, T& elem, bool before)
 		{
 			if (node_ptr->getValue() == elem)
 			{
-				Node<T>* new_node = new Node<T>();
 				Node<T>* _tmp_node = new Node<T>();
 				_tmp_node = (before) ? node_ptr->getPreviousNode() : node_ptr->getNextNode();
+                Node<T>* new_node = new Node<T>();
 				new_node->setValue(value);
 				new_node->setNextNode(before ? node_ptr : _tmp_node);
 				new_node->setPreviousNode(before ? _tmp_node : node_ptr);

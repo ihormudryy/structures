@@ -5,12 +5,15 @@
 using namespace std;
 
 typedef chrono::milliseconds ms;
+
 namespace customalgorithms
 {
 
 	class Timer
 	{
 	public:
+        Timer();
+        ~Timer();
 		void start();
 		void stop();
 		string getTime();
