@@ -64,11 +64,13 @@ private:
     Node<T>* _headNode;
     Node<T>* _tailNode;
     Node<T>* _currentNode;
+	Node<T>* _getByIndex(int i);
 	void _init(T);
 	T _pop(bool = false);
     void _add(T&, T&, bool = false);
 	void m_cycle_sort();
-	void m_insertion_sort();	
+	void m_insertion_sort();
+	void m_shell_sort();
 };
 
 template <typename T>
@@ -297,13 +299,26 @@ int LinkedList<T>::size()
 template <typename T>
 inline T LinkedList<T>::operator [](unsigned int value)
 {
-    int _t = 0;
-    for (Node<T>* iter = _headNode; iter; iter = iter->getNextNode())
-    {
-        if(value == _t++)
-            return iter->getValue();
-    }
-    return NULL;
+	int _t = 0;
+	for (Node<T>* iter = _headNode; iter; iter = iter->getNextNode())
+	{
+		if (value == _t++)
+			return iter->getValue();
+	}
+	return NULL;
+}
+
+
+template <typename T>
+inline Node<T>* LinkedList<T>::_getByIndex(int value)
+{
+	int _t = 0;
+	for (Node<T>* iter = _headNode; iter; iter = iter->getNextNode())
+	{
+		if (value == _t++)
+			return iter;
+	}
+	return NULL;
 }
 
 template <typename T>
@@ -441,6 +456,9 @@ void LinkedList<T>::sort(sorting_alg arg)
 	case INSERTION_SORT:
 		this->m_insertion_sort();
 		break;
+	case SHELL_SORT:
+		this->m_shell_sort();
+		break;
 	}
 }
 
@@ -468,6 +486,25 @@ void LinkedList<T>::m_insertion_sort()
 			 j = j->getPreviousNode() )
 			exchangeValues(*j, *(j->getPreviousNode()));
 	}
+}
+
+template <typename T>
+void LinkedList<T>::m_shell_sort()
+{
+	int h = 1;
+	while (h < _size / 3) h = h * 3 + 1;	
+	while (h >= 1)
+	{
+		for (int i = h; i < _size; i++)
+		{
+			for (int j = i; j >= h && _getByIndex(j)->getValue() < _getByIndex(j - h)->getValue(); j--)
+			{
+				exchangeValues(*(_getByIndex(j)), *(_getByIndex(j - h)));
+			}
+		}
+		h /= 3;
+	}
+	
 }
 
 }

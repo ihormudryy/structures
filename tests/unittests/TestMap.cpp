@@ -52,5 +52,7 @@ TEST(TestMap, testCreate)
 	{
         e.debug_print();
     }
+#ifndef __EMSCRIPTEN__
 	ASSERT_THROW(ASSERT(a1), Error);
+#endif // __EMSCRIPTEN__
 }

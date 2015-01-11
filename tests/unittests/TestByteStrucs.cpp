@@ -2,6 +2,8 @@
 #include <memory>
 #include <math.h> 
 #include <limits> 
+#include "stack/stack.h"
+#include "queue/queue.h"
 
 #ifndef TESTING_MODE_H
 #define TESTING_MODE_H
@@ -345,7 +347,6 @@ int fun2()
 
 TEST(TestByteStruct, testCustomStringClass)
 {
-
     String s1("igorko");
     String s2 = s1;
     s1.print();
@@ -371,4 +372,41 @@ TEST(TestByteStruct, testCustomStringClass)
         cout << "Exception ";
     }
     cout << x << " " << i;
+}
+
+TEST(TestByteStruct, testHouseOfCards)
+{
+    using namespace customalgorithms;
+    Stack<int> s;
+    Queue<int> q();
+    int a[56];
+    for(int i = 0; i < 56; i++)
+        a[i] = -1;
+    int counter = 0;
+    while (counter < 56)
+    {
+        int val = rand() % 56;
+        if(a[val] == -1)
+        {
+            s.push(val);
+            a[val] = 1;
+            counter++;
+        }
+    }
+    cout << "Size " << s.size() << endl;
+    //while(s.size() > 0) cout << s.pop() << " ";
+    cout << endl;
+    /*
+    while (q.size() < 56)
+    {
+        int v1 = s.pop();
+        int v2 = s.pop();
+        while(v1 < v2)
+        {
+            q.enqueue(v2);
+            v2 = s.pop();
+        }
+        else 
+    }
+    */
 }

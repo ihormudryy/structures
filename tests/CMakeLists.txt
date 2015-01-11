@@ -23,21 +23,43 @@ set(SOURCES
     ${TEST_SOURCES}
 )
 
-include_directories(
-    ${CUSTOM_ALGORYTHMS_INCLUDE_DIR}
-    ${GTEST}
-)
+if(EMSCRIPTEN)
+	include_directories(
+		${CUSTOM_ALGORYTHMS_INCLUDE_DIR}
+		${GTEST}
+		${EMSC_INCLUDE}
+	)
 
-add_executable(unittests ${SOURCES})
+	add_executable(unittests ${SOURCES})
 
-target_link_libraries(
-  unittests
-	gmock
-	structures
-)
+	target_link_libraries(
+	  unittests
+	  gmock
+	  structures
+	  ${EMSCRIPTEN_LIBS}
+	)
+else()
+	include_directories(
+		${CUSTOM_ALGORYTHMS_INCLUDE_DIR}
+		${GTEST}
+		/usr/include/X11
+		${EMSC_INCLUDE}
+	)
+
+	#link_directories(/usr/X11R6/lib)
+	SET(EXTRA_LIBS GL X11)
+
+	add_executable(unittests ${SOURCES})
+
+	target_link_libraries(
+	  unittests
+	  gmock
+	  structures
+	  ${EXTRA_LIBS}
+	)
+endif(EMSCRIPTEN)
 
 if(WIN32)
-   
     if (CMAKE_BUILD_TYPE  STREQUAL "Release")
         set (BUILD "Release")
     else()

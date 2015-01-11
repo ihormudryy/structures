@@ -10,9 +10,10 @@ set(SOURCES
 
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/../include"
+	${EMSC_INCLUDE}
 )
 
-#add_executable(structures ${SOURCES})
+add_executable(main ${SOURCES})
 
 add_library(structures ${SOURCES})
 

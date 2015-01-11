@@ -13,10 +13,8 @@ string Timer::getTime()
     int minutes = (delta / (1000*60)) % 60;
     int sec = (delta / 1000) % 60;
     int ms = delta % 1000;
-	//int days = hours / 24;
 	string s;
-	s = //to_string(days) + "days " +
-        to_string(hours) + "h " +
+	s = to_string(hours) + "h " +
         to_string(minutes) + "m " +
         to_string(sec) + "s " +
         to_string(ms) + "ms \n";
@@ -37,4 +35,5 @@ void Timer::stop()
 {
 	_timestamp_end = chrono::duration_cast<ms>(chrono::high_resolution_clock::now().time_since_epoch());
 	_delta = _timestamp_end.count() - _timestamp_start.count();
+	cout << getTime() << endl;
 }

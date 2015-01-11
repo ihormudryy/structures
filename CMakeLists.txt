@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.11)
 
 set(CMAKE_CONFIGURATION_TYPES ${CMAKE_BUILD_TYPE})
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -12,10 +13,16 @@ option(CODE_COVERAGE "Enable code coverage option" OFF)
 
 if(CODE_COVERAGE)
 	set(COVERAGE "-fprofile-arcs -ftest-coverage")
-	set(GCC_COVERAGE_LINK_FLAGS "-lgcov")
+  	set(GCC_COVERAGE_LINK_FLAGS "-lgcov")
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -Wall -Wno-unused-parameter -std=c++11 ${COVERAGE}")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -Wall -Wno-unused-parameter -std=c++11 ${COVERAGE}")
+  	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -Wall -Wno-unused-parameter -std=c++11 ${COVERAGE}")
+  	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -Wall -Wno-unused-parameter -std=c++11 ${COVERAGE}")
+endif()
+
+if(EMSCRIPTEN)
+	set(EMMAKEN_CFLAGS "${CMAKE_C_FLAGS} -g -O0 -Wall -Wno-unused-parameter -std=c++11")
+	set(emscripten_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+	find_package(emscripten)
 endif()
 
 add_subdirectory(src)
