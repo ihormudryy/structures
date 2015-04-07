@@ -5,6 +5,10 @@
 
 #pragma once
 
+#ifndef nullptr
+#define nullptr NULL
+#endif // nullptr
+
 namespace customalgorithms
 {
 

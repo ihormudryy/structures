@@ -17,8 +17,14 @@ add_executable(main ${SOURCES})
 
 add_library(structures ${SOURCES})
 
-target_link_libraries(
-    structures
-)
+if(ANDROID)
+    target_link_libraries(
+        structures
+    )
+else()
+    target_link_libraries(
+        structures
+    )
+endif()
 
 install(DIRECTORY ../include DESTINATION "${CMAKE_INSTALL_PREFIX}" COMPONENT dev)

@@ -3,6 +3,10 @@
 #ifndef NODE_H
 #define NODE_H
 
+#ifndef nullptr
+#define nullptr NULL
+#endif // nullptr
+
 using namespace std;
 
 namespace customalgorithms

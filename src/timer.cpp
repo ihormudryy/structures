@@ -14,10 +14,10 @@ string Timer::getTime()
     int sec = (delta / 1000) % 60;
     int ms = delta % 1000;
 	string s;
-	s = to_string(hours) + "h " +
+    /*s = to_string(hours) + "h " +
         to_string(minutes) + "m " +
         to_string(sec) + "s " +
-        to_string(ms) + "ms \n";
+        to_string(ms) + "ms \n";*/
 	return s;
 }
 

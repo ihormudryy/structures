@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.here.geoviz">
+    <application
+            android:label="@string/geoviz_activity">
+        <activity android:name="GeoVizActivity"
+                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:launchMode="singleTask"
+                android:configChanges="orientation|keyboardHidden">
+            <meta-data android:name="android.app.lib_name" android:value="GeoVizJNI" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+GeoVizJNI
+    <uses-feature android:glEsVersion="0x00030000"/>
+    <uses-sdk android:minSdkVersion="18"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+</manifest>

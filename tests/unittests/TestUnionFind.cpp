@@ -15,6 +15,7 @@
 #define WINDOWS
 #endif
 
+#ifndef __ANDROID__
 using namespace customalgorithms;
 using namespace std;
 using namespace std::chrono;
@@ -108,3 +109,4 @@ TEST(TestUnionFind, createTiny)
 	}
 	
 }
+#endif // __ANDROID__

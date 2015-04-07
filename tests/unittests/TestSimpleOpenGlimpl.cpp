@@ -32,7 +32,7 @@ namespace GLTest
 {
 	void drawBox(void)
 	{
-			int i;
+        int i;
 
 			for (i = 0; i < 6; i++) {
 				glBegin(GL_QUADS);
