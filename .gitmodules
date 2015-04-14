@@ -1,0 +1,6 @@
+[submodule "googletest"]
+	path = external/googletest
+	url = https://chromium.googlesource.com/external/googletest.git
+[submodule "glm"]
+	path = external/glm
+	url = https://github.com/g-truc/glm
