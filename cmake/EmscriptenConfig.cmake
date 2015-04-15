@@ -1,4 +1,3 @@
-message("emscripten mode" ${EMSCRIPTEN_PATH})
 SET(EMSCRIPTEN_BUILD 1)
 
 set(PLATFORM_EMSCRIPTEN TRUE)

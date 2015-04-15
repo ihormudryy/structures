@@ -1,0 +1,3 @@
+set solib-search-path @GDB_SOLIB_SEARCH_PATH@
+source @NDK_ROOT@/prebuilt/common/gdb/common.setup
+directory @GDB_SOURCE_DIRS@

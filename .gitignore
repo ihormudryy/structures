@@ -26,6 +26,3 @@
 *.exe
 *.out
 *.app
-
-build_qt
-build_vs2013

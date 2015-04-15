@@ -1,8 +1,8 @@
-package com.structures.${target};
+package com.here.geoviz.${target};
 
-import android.os.Bundle;
 import android.test.InstrumentationTestRunner;
 import android.test.InstrumentationTestSuite;
+import android.os.Bundle;
 import android.util.Log;
 
 import junit.framework.TestSuite;
@@ -11,23 +11,18 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.*;
 
-import com.structures.${target}.test.NativeTester;
+import com.here.geoviz.${target}.test.TestRunner;
 
-public class TestRunner extends InstrumentationTestRunner
+public class Launcher extends InstrumentationTestRunner
 {
-    static
-    {
-        System.loadLibrary("gnustl_shared");
-    }
-
     private Bundle createParams = null;
 
     @Override
     public TestSuite getAllTests()
     {
         InstrumentationTestSuite suite = new InstrumentationTestSuite(this);
-        NativeTester.setParams(createParams);
-        suite.addTestSuite(NativeTester.class);
+        TestRunner.setParams(createParams);
+        suite.addTestSuite(TestRunner.class);
         return suite;
     }
 

@@ -1,6 +1,8 @@
-project(structures CXX)
+project(Structures CXX)
 
-file(GLOB_RECURSE HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/../include/*.h")
+set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
+
+file(GLOB_RECURSE HEADERS "${INCLUDE_DIR}/*.h")
 file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 set(SOURCES
@@ -9,22 +11,16 @@ set(SOURCES
 )
 
 include_directories(
-    "${CMAKE_CURRENT_SOURCE_DIR}/../include"
+    ${INCLUDE_DIR}
 	${EMSC_INCLUDE}
 )
 
-add_executable(main ${SOURCES})
+add_library(${PROJECT_NAME} ${SOURCES})
 
-add_library(structures ${SOURCES})
-
-if(ANDROID)
-    target_link_libraries(
-        structures
-    )
-else()
-    target_link_libraries(
-        structures
-    )
-endif()
-
-install(DIRECTORY ../include DESTINATION "${CMAKE_INSTALL_PREFIX}" COMPONENT dev)
+install(TARGETS ${PROJECT_NAME}
+    COMPONENT dev
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+)
+install(DIRECTORY ${INCLUDE_DIR} DESTINATION "${CMAKE_INSTALL_PREFIX}" COMPONENT dev)

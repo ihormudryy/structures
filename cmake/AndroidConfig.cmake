@@ -1,7 +1,11 @@
-if(DEFINED CMAKE_CROSSCOMPILING)
-    # prevent multiple sourcing of this file
+if (NOT ANDROID OR EMSCRIPTEN)
     return()
 endif()
+
+include(${PROJECT_SOURCE_DIR}/cmake/CreateApk.cmake)
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mfloat-abi=softfp -mfpu=neon -mfp16-format=ieee")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfloat-abi=softfp -mfpu=neon -mfp16-format=ieee")
 
 set(NDK_ROOT $ENV{NDK_ROOT} CACHE PATH "NDK root path")
 file(TO_CMAKE_PATH "${NDK_ROOT}" NDK_ROOT)
@@ -15,14 +19,13 @@ if(NOT SDK_ROOT)
     message(FATAL_ERROR "SDK_ROOT not specified.\n\n")
 endif()
 
-### TODO - set this dependend on the eabi if we want to support 64 bit builds
 set(CMAKE_C_SIZEOF_DATA_PTR 4)
 
 set(ANDROID_EABI_VERSION 4.9 CACHE STRING "Android EABI version")
 
 # Default versions of NDK/SDK
-set(ANDROID_SDK_VERSION 14 CACHE STRING "Android SDK version")
-set(ANDROID_NDK_VERSION 14 CACHE STRING "Android NDK version")
+set(ANDROID_SDK_VERSION 15 CACHE STRING "Android SDK version")
+set(ANDROID_NDK_VERSION 15 CACHE STRING "Android NDK version")
 set(ANDROID_ABI armeabi-v7a CACHE STRING "Android ABI, e.g. x86 or armeabi-v7a")
 
 if ("${ANDROID_ABI}" STREQUAL "x86")
@@ -98,9 +101,10 @@ set(CMAKE_OBJDUMP ${ANDROID_TOOLCHAIN_ROOT}/bin/${ANDROID_TOOL_PREFIX}-objdump${
 set(CMAKE_RANLIB ${ANDROID_TOOLCHAIN_ROOT}/bin/${ANDROID_TOOL_PREFIX}-ranlib${ANDROID_TOOL_OS_SUFFIX} CACHE PATH "ranlib")
 
 set(ANDROID_SYSROOT "--sysroot=${NDK_ROOT}/platforms/android-${ANDROID_NDK_VERSION}/arch-${ANDROID_ARCH}/")
-set(CMAKE_EXE_LINKER_FLAGS_INIT "${ANDROID_SYSROOT} -l${ANDROID_STL_LIB_NAME} -lm")
-set(CMAKE_SHARED_LINKER_FLAGS_INIT "${ANDROID_SYSROOT} -l${ANDROID_STL_LIB_NAME} -lm -Wl,--no-undefined")
-set(CMAKE_MODULE_LINKER_FLAGS_INIT "${ANDROID_SYSROOT} -l${ANDROID_STL_LIB_NAME} -lm")
+set(ANDROID_SYSROOT_LFLAGS "-L${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/${ANDROID_EABI_VERSION}/libs/${ANDROID_ABI} -L${NDK_ROOT}/platforms/android-${ANDROID_NDK_VERSION}/arch-${ANDROID_ARCH}/usr/lib")
+set(CMAKE_EXE_LINKER_FLAGS_INIT "${ANDROID_SYSROOT} ${ANDROID_SYSROOT_LFLAGS} -l${ANDROID_STL_LIB_NAME} -lm")
+set(CMAKE_SHARED_LINKER_FLAGS_INIT "${ANDROID_SYSROOT} ${ANDROID_SYSROOT_LFLAGS} -l${ANDROID_STL_LIB_NAME} -lm -Wl,--no-undefined")
+set(CMAKE_MODULE_LINKER_FLAGS_INIT "${ANDROID_SYSROOT} ${ANDROID_SYSROOT_LFLAGS} -l${ANDROID_STL_LIB_NAME} -lm")
 
 # Change the command for the C++ linker to use the C compiler so it doesn't link to libstdc++
 #set(CMAKE_CXX_CREATE_SHARED_LIBRARY
@@ -110,8 +114,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -finline-limit=64")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -finline-limit=64")
 
 if (ANDROID_GCC_ARCH)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=${ANDROID_GCC_ARCH} -w")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=${ANDROID_GCC_ARCH} -w")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=${ANDROID_GCC_ARCH}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=${ANDROID_GCC_ARCH}")
 endif()
 
 set(CMAKE_FIND_ROOT_PATH ${NDK_ROOT}/platforms/android-${ANDROID_NDK_VERSION}/arch-${ANDROID_ARCH}/usr/
@@ -125,11 +129,6 @@ include_directories(
     ${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/${ANDROID_EABI_VERSION}/include
     ${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/${ANDROID_EABI_VERSION}/libs/${ANDROID_ABI}/include
     ${NDK_ROOT}/platforms/android-${ANDROID_NDK_VERSION}/arch-${ANDROID_ARCH}/usr/include
-)
-
-link_directories(
-    ${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/${ANDROID_EABI_VERSION}/libs/${ANDROID_ABI}
-    ${NDK_ROOT}/platforms/android-${ANDROID_NDK_VERSION}/arch-${ANDROID_ARCH}/usr/lib
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" CACHE STRING "c++ flags")

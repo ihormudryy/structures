@@ -1,6 +1,4 @@
-project(unittests)
-
-#find_package(TestTools REQUIRED)
+project(Structures.UnitTests)
 
 set(GMOCK_SOURCE_DIR "${CMAKE_SOURCE_DIR}/3rd_party/gmock-1.7.0")
 
@@ -39,18 +37,19 @@ if (EMSCRIPTEN)
         ${LIBCXXABI_INCLUDE}
     )
 
-    add_executable(unittests ${SOURCES})
+    add_executable(${PROJECT_NAME} ${SOURCES})
 
     target_link_libraries(
-        unittests
+        ${PROJECT_NAME}
         gmock
-        structures
+        Structures
         ${EMSCRIPTEN_LIBS}
     )
+endif()
 
-elseif (ANDROID)
+if (ANDROID)
     set(EXTRA_PLATFORM_LIBRARIES android)
-    set(ANDROID_GLUE "${CMAKE_SOURCE_DIR}/apps/android_tmp/app_glue.cpp")
+    set(ANDROID_GLUE "${CMAKE_SOURCE_DIR}/apps/android_unittest/app_glue.cpp")
     set(ANDROID_SOURCES
         ${GMOCK_SOURCES}
         ${TEST_HEADERS}
@@ -59,7 +58,7 @@ elseif (ANDROID)
         ${ANDROID_GLUE}
     )
 
-    add_library(unittests SHARED ${ANDROID_SOURCES})
+    add_library(${PROJECT_NAME} SHARED ${ANDROID_SOURCES})
 
     include_directories(
         ${CUSTOM_ALGORYTHMS_INCLUDE_DIR}
@@ -71,36 +70,38 @@ elseif (ANDROID)
         ${GMOCK_SOURCE_DIR}
     )
 
-    set(ANDROID_TESTS ${ANDROID_TESTS} unittests PARENT_SCOPE)
+    set(ANDROID_TESTS ${ANDROID_TESTS} ${PROJECT_NAME} PARENT_SCOPE)
 
     target_link_libraries(
-        unittests
+        ${PROJECT_NAME}
         gmock
         glm
-        structures
+        Structures
         ${EXTRA_PLATFORM_LIBRARIES}
     )
     
-    create_apk(unittests debug)
-else()
+    create_apk(${PROJECT_NAME} debug)
+endif()
+
+if ((NOT ANDROID) AND (NOT EMSCRIPTEN))
     include_directories(
         ${CUSTOM_ALGORYTHMS_INCLUDE_DIR}
         ${GTEST}
         ${GLM}
         /usr/include
-#        /usr/include/GLES2
+        /usr/include/GLES2
     )
 
     link_directories(/usr/X11R6/lib)
     SET(EXTRA_LIBS GL X11)
 
-    add_executable(unittests ${SOURCES})
+    add_executable(${PROJECT_NAME} ${SOURCES})
 
     target_link_libraries(
-        unittests
+        ${PROJECT_NAME}
         gmock
-        structures
-        testtools
+        Structures
+        Structures.TestTools
         ${EXTRA_LIBS}
     )
 endif()
@@ -111,13 +112,40 @@ if(WIN32)
     else()
         set (BUILD "Debug")
     endif()
-    execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/tests/data 
-                               ${PROJECT_BINARY_DIR}/${BUILD}/data
-                    )
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        ${CMAKE_SOURCE_DIR}/tests/data 
+        ${PROJECT_BINARY_DIR}/${BUILD}/data
+    )
 else()
-    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/tests/data
-                                                           ${PROJECT_BINARY_DIR}/data
+    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink 
+        ${CMAKE_SOURCE_DIR}/tests/data
+        ${PROJECT_BINARY_DIR}/data
     )
 endif()
 
-set_property(TARGET unittests PROPERTY FOLDER tests/unittests)
+#Add tests to "test" package
+if (ANDROID)
+    create_apk(${PROJECT_NAME} debug)
+    #install(TARGETS Structures.UnitTests
+    #    ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/tests/geoviz"
+    #    LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/tests/geoviz"
+    #    COMPONENT tests
+    #)
+else()
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/tests/Structures.UnitTests"
+        COMPONENT tests
+    )
+endif()
+
+#Add test to ctest test runner
+if(EMSCRIPTEN)
+    add_test(Structures.UnitTests node ${PROJECT_NAME})
+else()
+    foreach(testFile ${TEST_SOURCES})
+        get_filename_component(testName ${testFile} NAME_WE)
+        add_test(${testName} ${PROJECT_NAME})
+    endforeach()
+endif()
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER tests/${PROJECT_NAME})

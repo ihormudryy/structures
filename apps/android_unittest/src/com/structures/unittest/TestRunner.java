@@ -1,4 +1,4 @@
-package com.structures.${target}.test;
+package com.here.geoviz.${target}.test;
 
 import android.test.AndroidTestCase;
 import android.util.Log;
@@ -8,23 +8,23 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.*;
 
-public class NativeTester extends AndroidTestCase
+public class TestRunner extends AndroidTestCase
 {
-    static Bundle createParams = null;
-
-    static {
+    static
+    {
         System.loadLibrary("gnustl_shared");
         System.loadLibrary("${target}");
     }
+
+    public static Bundle createParams = null;
+
+    private native boolean runTests(String appPath, String logFile, String[] args);
 
     static public void setParams(Bundle params)
     {
         createParams = params;
     }
 
-    private native boolean runTests(String appPath, String logFile, String[] args);
-
-    // Any class starting with "test" will be run as a test-case
     public void testNative()
     {
         long ts = System.currentTimeMillis();
@@ -36,8 +36,6 @@ public class NativeTester extends AndroidTestCase
         argList.add("${target}");
         argList.add(outArg);
 
-        // parameters for tests like:
-        // adb shell am start -e -DENVVAR VALUE -e --gtest_parameter value ...
         if (createParams != null) {
             for (String key : createParams.keySet()) {
                 argList.add(key);
