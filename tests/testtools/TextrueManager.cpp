@@ -1,4 +1,5 @@
-#include "TextureManager.h"
+#include <TextureManager.h>
+
 #include <sstream>
 #include <string>
 #include <iostream>
@@ -8,7 +9,7 @@
 #include <cstring>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#include "../../3rd_party/soil/SOIL.h"
+#include <SOIL.h>
 
 namespace opengl {
 

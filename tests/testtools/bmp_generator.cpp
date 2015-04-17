@@ -1,4 +1,4 @@
-#include "../../tests/testtools/bmp_generator.h"
+#include <bmp_generator.h>
 
 #if defined __linux__ && !defined __ANDROID__
 

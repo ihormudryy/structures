@@ -5,6 +5,9 @@ Created for better understanding algorithms and data structures in C++ 11
 
 To build the project CMAKE 2.8.0 or higher is needed.
 
+After you cloned this repo run in command line:
+git submodule update --init --recursive
+
 Steps to build a project and compile 
 Linux:
 1. cmake -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug ..

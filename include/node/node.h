@@ -1,11 +1,6 @@
 #include <memory>
 
-#ifndef NODE_H
-#define NODE_H
-
-#ifndef nullptr
-#define nullptr NULL
-#endif // nullptr
+#pragma once
 
 using namespace std;
 
@@ -161,5 +156,3 @@ namespace customalgorithms
 		next = node;
 	}
 }
-
-#endif // NODE_H

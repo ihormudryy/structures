@@ -9,7 +9,7 @@
 #include <GL/gl.h>
 #include <GL/glx.h>
 
-#include "../../tests/testtools/bmp_generator.h"
+#include <bmp_generator.h>
 
 #define WIDTH 800
 #define HEIGHT 600

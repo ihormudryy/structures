@@ -1,7 +1,4 @@
-#include "../include/linkedlist/linkedlist.h"
-
-#ifndef QUEUE_H
-#define QUEUE_H
+#include <linkedlist/linkedlist.h>
 
 #pragma once
 
@@ -63,4 +60,3 @@ int Queue<T>::size()
 }
 
 }
-#endif // QUEUE_H

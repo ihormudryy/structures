@@ -5,7 +5,7 @@
 #define TEXTURE_H
 #endif
 
-#include <glm.hpp>
+#include <glm/glm.hpp>
 #include <GL/gl.h>
 #include <GL/glext.h>
 #include <GL/glx.h>

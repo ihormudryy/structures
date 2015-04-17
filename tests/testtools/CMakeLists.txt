@@ -1,20 +1,30 @@
 project(Structures.TestTools)
 
-file(GLOB_RECURSE TEST_TOOLS_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-file(GLOB_RECURSE TEST_TOOLS_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+if(NOT SOIL_FOUND)
+	find_package(Soil REQUIRED)
+endif()
 
-set(TOOLS_SOURCES
-    ${TEST_TOOLS_HEADERS}
-    ${TEST_TOOLS_SOURCES}
-    ${GLM}
-    ${SOIL}
+if(NOT GLM_FOUND)
+    find_package(Glm REQUIRED)
+endif()
+
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+file(GLOB_RECURSE HEADERS "${INCLUDE_DIR}/*.h")
+file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+
+set(ALL_SOURCES
+    ${HEADERS}
+    ${SOURCES}
 )
 
-include_directories(
-	${GLM}
-	${CMAKE_CURRENT_SOURCE_DIR}
+add_library(${PROJECT_NAME} ${ALL_SOURCES})
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC ${INCLUDE_DIR}
+    PRIVATE ${GLM_INCLUDE_DIRS}
+    PRIVATE ${SOIL_INCLUDE_DIRS}
 )
 
-add_library(${PROJECT_NAME} ${TOOLS_SOURCES})
-
-set(TEST_TOOLS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME}
+    SOIL
+)

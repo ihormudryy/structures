@@ -3,9 +3,6 @@
 #include <string>
 #include <stack>
 
-#ifndef TIMER_H
-#define TIMER_H
-
 #pragma once
 
 using namespace std;
@@ -40,5 +37,3 @@ private:
 };
 
 } // namespace testtools
-
-#endif // TIMER_H

@@ -4,7 +4,7 @@
 #define TESTING_MODE_H
 #endif // TESTING_MODE_H
 
-#include "../include/linkedlist/linkedlist.h"
+#include <linkedlist/linkedlist.h>
 
 customalgorithms::LinkedList<int> list;
 

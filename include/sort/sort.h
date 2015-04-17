@@ -1,5 +1,4 @@
-#ifndef SORT_H
-#define SORT_H
+#pragma once
 
 namespace customalgorithms {
 /*
@@ -23,5 +22,3 @@ protected:
 };
 
 }
-
-#endif // SORT_H

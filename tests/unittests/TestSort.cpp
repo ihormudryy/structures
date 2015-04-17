@@ -1,26 +1,26 @@
 #include <gtest/gtest.h>
-#include "sort/sort.h"
-#include "linkedlist/linkedlist.h"
+#include <sort/sort.h>
+#include <linkedlist/linkedlist.h>
+
 #ifndef TESTING_MODE_H
 #define TESTING_MODE_H
 #endif // TESTING_MODE_H
 
-#include "timer.h"
+#include <timer.h>
 
 using namespace customalgorithms;
 
-Timer timer;
-
 void sorting(LinkedList<int>::sorting_alg param, bool print)
 {
+    testtools::Timer timer;
 	LinkedList<int> list;
 	for (int i = 0; i < 100; i++)
 		list.add(rand() % 100);
 	if (print)	list.print();
 	std::cout << endl;
-	timer.start();
+    timer.startWatch();
 	list.sort(param);
-	timer.stop();
+    timer.stopWatch();
 	if (print)	list.print();
 	int prev = list.get();
 	int next = list.get();

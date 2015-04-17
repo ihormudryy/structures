@@ -1,0 +1,45 @@
+#include <jni.h> include <android/log.h> include <gtest/gtest.h> include <fstream> include <vector> include <assert.h> include <unistd.h> include <fcntl.h> include <stdio.h> include <errno.h>
+
+#ifndef APP_GLUE define APP_GLUE
+
+static JavaVM *gVM;
+
+extern "C" JNIEXPORT jboolean JNICALL Java_com_structures_unittests_test_NativeTester_runTests(JNIEnv* env, jobject obj, jstring java_appPath, jstring java_logFilename, jobjectArray java_args) {
+    //LOGI("runTests");
+    /*
+    const char *appPath = env->GetStringUTFChars(java_appPath, 0);
+    env->ReleaseStringUTFChars(java_appPath, appPath);
+
+    const char *logFilename = env->GetStringUTFChars(java_logFilename, 0);
+    int logFd = ::open(logFilename, O_TRUNC | O_CREAT | O_RDWR, 0660);
+    env->ReleaseStringUTFChars(java_logFilename, logFilename);
+    if (logFd == -1) {
+        //LOGE("Cannot open log file: %s", strerror(errno));
+        return JNI_FALSE;
+    }
+    */
+    std::vector<char *> args;
+    std::vector<char *> original_args = args;
+
+    char **argv = args.data();
+    int argc = args.size() - 1;
+
+    testing::InitGoogleTest(&argc, argv);
+    int result = RUN_ALL_TESTS();
+
+    for (unsigned int i = 0; i < original_args.size() - 1; ++i) {
+        ::free(args[i]);
+    }
+    //LOGI("result=%d", result);
+    return (result == 0) ? JNI_TRUE : JNI_FALSE;
+}
+
+extern "C"
+JNIEXPORT jint JNICALL
+JNI_OnLoad(JavaVM* vm, void* reserved)
+{
+    gVM = vm;
+    return JNI_VERSION_1_6;
+}
+
+#endif //  APP_GLUE

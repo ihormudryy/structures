@@ -1,11 +1,9 @@
 #include <gtest/gtest.h>
-#include "stack/stack.h"
+#include <stack/stack.h>
 
 #ifndef TESTING_MODE_H
 #define TESTING_MODE_H
 #endif // TESTING_MODE_H
-
-#include "../tests/unittests/TestWrapper.h"
 
 using namespace customalgorithms;
 

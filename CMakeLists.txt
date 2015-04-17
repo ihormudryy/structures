@@ -1,11 +1,18 @@
 cmake_minimum_required(VERSION 2.8.11)
 
+option(CODE_COVERAGE "Enable code coverage option" OFF)
+option(EMSCRIPTEN "Emscripten crosscompilation mode " OFF)
+option(ANDROID "Build Android aplication" OFF)
+option(WARNINGS "Build project with warnings enabled" ON)
+option(BUILD_TESTS "Create project files for building the unit tests" ON)
+
 set(VERSION_MAJOR "0")
 set(VERSION_MINOR "0")
 set(VERSION_PATCH "1")
 set(PACKAGE_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
 
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(EXTERNAL_SOURCE_DIR ${CMAKE_SOURCE_DIR}/external)
 
 set(CMAKE_CONFIGURATION_TYPES ${CMAKE_BUILD_TYPE})
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -std=c++11")
@@ -20,12 +27,6 @@ set(SUPPORTED_MODES
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-std=gnu++0x)
 endif()
-
-option(CODE_COVERAGE "Enable code coverage option" OFF)
-option(EMSCRIPTEN "Emscripten crosscompilation mode " OFF)
-option(ANDROID "Build Android aplication" OFF)
-option(WARNINGS "Build project with warnings enabled" ON)
-option(BUILD_TESTS "Create project files for building the unit tests" ON)
 
 foreach(mode ${SUPPORTED_MODES})
 	set(${mode}_DIR ${CMAKE_MODULE_PATH})

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
-#include "queue/queue.h"
+
+#include <queue/queue.h>
 
 #ifndef TESTING_MODE_H
 #define TESTING_MODE_H

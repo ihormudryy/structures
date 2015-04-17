@@ -1,10 +1,10 @@
-#include "ShaderManager.h"
+#include <ShaderManager.h>
 
 #include <iostream>
 #include <string>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#include <gtc/type_ptr.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace opengl
 {

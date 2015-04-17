@@ -13,14 +13,14 @@
 #include <GLES3/gl3ext.h>
 #include <GLES3/gl3platform.h>
 
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtc/type_ptr.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-#include "../../tests/testtools/bmp_generator.h"
-#include "../../tests/testtools/ShaderManager.h"
-#include "../../tests/testtools/BufferManager.h"
-#include "../../tests/testtools/TextureManager.h"
+#include <bmp_generator.h>
+#include <ShaderManager.h>
+#include <BufferManager.h>
+#include <TextureManager.h>
 
 namespace supertest
 {

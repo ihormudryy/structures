@@ -2,8 +2,8 @@
 #include <memory>
 #include <math.h> 
 #include <limits> 
-#include "stack/stack.h"
-#include "queue/queue.h"
+#include <stack/stack.h>
+#include <queue/queue.h>
 
 #ifndef TESTING_MODE_H
 #define TESTING_MODE_H

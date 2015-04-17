@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "unionfind/unionfind.h"
+#include <unionfind/unionfind.h>
 #include <iostream>
 #include <fstream>
 #include <string>

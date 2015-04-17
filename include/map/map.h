@@ -1,8 +1,5 @@
 #include <memory>
 
-#ifndef MAP_H
-#define MAP_H
-
 #pragma once
 
 namespace customalgorithms
@@ -34,5 +31,3 @@ namespace customalgorithms
 
 	}
 }
-
-#endif // MAP_H

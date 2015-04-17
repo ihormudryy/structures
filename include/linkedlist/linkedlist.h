@@ -1,10 +1,7 @@
-#include "node/node.h"
-#include "sort/sort.h"
+#include <node/node.h>
+#include <sort/sort.h>
 #include <memory>
 #include <iostream>
-
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
 
 #pragma once
 
@@ -508,5 +505,3 @@ void LinkedList<T>::m_shell_sort()
 }
 
 }
-
-#endif // LINKEDLIST_H

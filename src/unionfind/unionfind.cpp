@@ -1,4 +1,4 @@
-#include "../include/unionfind/unionfind.h"
+#include <unionfind/unionfind.h>
 #include <iostream>
 
 using namespace customalgorithms;

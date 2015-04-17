@@ -1,8 +1,5 @@
 #include <memory>
-#include "../include/linkedlist/linkedlist.h"
-
-#ifndef STACK_H
-#define STACK_H
+#include <linkedlist/linkedlist.h>
 
 #pragma once
 
@@ -65,5 +62,3 @@ int Stack<T>::size()
 }
 
 }
-
-#endif // STACK_H

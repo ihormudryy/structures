@@ -5,7 +5,7 @@
 #define TESTING_MODE_H
 #endif // TESTING_MODE_H
 
-#include "../include/node/node.h"
+#include <node/node.h>
 
 using namespace customalgorithms;
 

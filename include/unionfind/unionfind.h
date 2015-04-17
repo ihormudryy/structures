@@ -1,13 +1,6 @@
 #include <memory>
 
-#ifndef UNIONFIND_H
-#define UNIONFIND_H
-
 #pragma once
-
-#ifndef nullptr
-#define nullptr NULL
-#endif // nullptr
 
 namespace customalgorithms
 {
@@ -40,4 +33,3 @@ private:
 };
 
 }
-#endif // UNIONFIND_H
