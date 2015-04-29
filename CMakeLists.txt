@@ -15,8 +15,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 set(EXTERNAL_SOURCE_DIR ${CMAKE_SOURCE_DIR}/external)
 
 set(CMAKE_CONFIGURATION_TYPES ${CMAKE_BUILD_TYPE})
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -std=c++11")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -std=c++11")
 
 set(SUPPORTED_MODES 
 	Android 
@@ -25,7 +25,7 @@ set(SUPPORTED_MODES
 )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-std=gnu++0x)
+#    add_definitions(-std=gnu++0x)
 endif()
 
 foreach(mode ${SUPPORTED_MODES})
